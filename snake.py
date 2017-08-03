@@ -1,22 +1,28 @@
 import turtle
 import random
-
+color=0
 turtle.tracer(1,0)
-
+counter=0
 SIZE_X=800
 SIZE_Y=500
 turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 SQUARE_SIZE=20
-START_LENGTH=7
+START_LENGTH=1
+turtle.color("green")
 pos_list=[]
 stamp_list=[]
 food_pos=[]
 food_stamps=[]
 snake=turtle.clone()
-snake.shape('square')
+snake.shape('circle')
 turtle.hideturtle()
 
+
+
+    
+    
+    
 for s in range (START_LENGTH):
     x_pos=snake.pos()[0]
     y_pos=snake.pos()[1]
@@ -74,7 +80,7 @@ turtle.onkeypress(right,RIGHT_ARROW)
 turtle.listen()
 
 food=turtle.clone()
-food.shape("circle")
+food.shape("square")
 food.hideturtle()
 
 def make_food():
@@ -114,19 +120,26 @@ def move_snake():
     pos_list.append(my_pos)
     new_stamp=snake.stamp()
     stamp_list.append(new_stamp)
-    old_stamp=stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
-    pos_list.pop(0)
+    
     
     global food_stamps,food_pos
     if snake.pos() in food_pos:
+        
         food_ind=food_pos.index(snake.pos())
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
+        #stamp_list.append(snake.pos())
         print("you have eaten the food!")
-        
+        counter=+1
+        print(counter)
         make_food()
+    else:
+        old_stamp=stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+        pos_list.pop(0)
+        
+        
 
 
 

@@ -1,0 +1,55 @@
+import turtle as tur
+import time
+
+def draw_x(bottom_left):
+    """ draw an "X" in a box given the coordinates
+        of the bottom left corner
+    """
+    tur.up()
+    start_x = bottom_left[0] + 20
+    start_y = bottom_left[1] + 20
+    tur.goto(start_x, start_y)
+    tur.down()
+    tur.goto(start_x + 50, start_y + 50)
+
+    tur.up()
+    tur.goto(start_x + 50, start_y)
+    tur.down()
+    tur.goto(start_x, start_y + 50)
+    
+def draw_square(x, y, side_length, colors):
+    tur.up()
+    tur.goto(x, y)
+    tur.down()
+    tur.color(colors[0], colors[1])
+    tur.fill(True)
+    for side in range(4):
+        tur.forward(side_length)
+        tur.left(90) 
+    tur.fill(False)
+
+
+draw_square(0, 0, 295, ("black", "red"))
+start_coords = []
+for row in range(3):
+    start_y = row*100
+    for col in range(3):
+        draw_square(100*col, start_y, 95, ("black", "white"))
+        start_coords.append([100*col, start_y])
+
+print "The starting coordinates for each box are:"
+print start_coords
+
+## using the bottom left coordinates,
+## print a number to show which box is which
+ctr = 0
+for x, y in start_coords:
+    tur.up()
+    tur.goto(x+50, y+50)
+    tur.down()
+    tur.write(str(ctr))
+    ctr += 1
+
+time.sleep(2.0)
+draw_x(start_coords[2])  ## place an "X" in the 3rd box
+raw_input("Press Enter") 
