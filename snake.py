@@ -2,14 +2,14 @@ import turtle
 import random
 color=0
 turtle.tracer(1,0)
-counter=0
+counter=1
 SIZE_X=800
 SIZE_Y=500
 turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 SQUARE_SIZE=20
 START_LENGTH=1
-turtle.color("green")
+turtle.color("red")
 pos_list=[]
 stamp_list=[]
 food_pos=[]
@@ -17,10 +17,19 @@ food_stamps=[]
 snake=turtle.clone()
 snake.shape('circle')
 turtle.hideturtle()
+snake.color("green")
+
+box=turtle.clone()
+
+box.goto(0,250)
+box.pendown()
+box.goto(400,250)
+box.goto(-400,250)
+box.goto(-400,-250)
+box.goto(400,-250)
+box.goto(400,250)
 
 
-
-    
     
     
 for s in range (START_LENGTH):
@@ -55,22 +64,26 @@ LEFT_EDGE=-400
 
 def up():
     global direction
-    direction=UP
+    if direction !=DOWN:
+        direction=UP
     print("you moved up !!")
     
 def down():
     global direction
-    direction=DOWN
+    if direction != UP:
+        direction=DOWN
     print("you moved down !!")
 
 def left():
     global direction
-    direction=LEFT
+    if direction !=RIGHT:
+        direction=LEFT
     print("you moved left !! ")
 
 def right():
     global direction
-    direction=RIGHT
+    if direction !=LEFT:
+        direction=RIGHT
     print("you moved right !!")
 
 turtle.onkeypress(up,UP_ARROW)
@@ -80,6 +93,7 @@ turtle.onkeypress(right,RIGHT_ARROW)
 turtle.listen()
 
 food=turtle.clone()
+food.color("orange")
 food.shape("square")
 food.hideturtle()
 
@@ -114,7 +128,7 @@ def move_snake():
         print("you moved up !!")
     elif direction==DOWN:
         snake.goto(x_pos,y_pos-SQUARE_SIZE)
-
+    
         
     my_pos=snake.pos()
     pos_list.append(my_pos)
@@ -124,14 +138,16 @@ def move_snake():
     
     global food_stamps,food_pos
     if snake.pos() in food_pos:
-        
+        global counter
         food_ind=food_pos.index(snake.pos())
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         #stamp_list.append(snake.pos())
         print("you have eaten the food!")
-        counter=+1
+        counter=counter+1
+        turtle.clear()
+        turtle.write(counter,font=(20))
         print(counter)
         make_food()
     else:
